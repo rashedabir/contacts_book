@@ -4,7 +4,9 @@ import {
   createContactAction,
   updateContactAction,
 } from "../actions/createContactAction";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function CreateContact() {
   const [name, setName] = useState("");
@@ -12,7 +14,6 @@ function CreateContact() {
   const [number, setNumber] = useState("");
   const [uid, setId] = useState("");
   const dispatch = useDispatch();
-  const history = useHistory();
   const { id } = useParams();
   const state = useSelector((state) => state.contacts.list);
   const currentContact = state.find((contact) => contact.id === id);
@@ -29,13 +30,14 @@ function CreateContact() {
       setName("");
       setEmail("");
       setNumber("");
+      toast.warning("Contact Updated");
     } else {
       dispatch(createContactAction(contact));
       setName("");
       setEmail("");
       setNumber("");
+      toast.success("Contact Added");
     }
-    history.push("/");
   };
 
   useEffect(() => {
@@ -49,6 +51,7 @@ function CreateContact() {
 
   return (
     <div className="container py-3 create_contact">
+      <ToastContainer />
       <h4 className="m-3 text-capitalize">create a contact</h4>
       <form onSubmit={saveList} className="border p-3">
         <div className="form-floating mb-3">

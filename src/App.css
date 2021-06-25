@@ -104,3 +104,9 @@ footer{
   text-align: center;
   margin: auto;
 }
+
+@media only screen and (max-width: 720px) {
+  .action{
+    opacity: 1;
+  }
+}

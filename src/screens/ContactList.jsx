@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteSelectedContacts } from "../actions/createContactAction";
 import ContactTable from "../components/ContactTable";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ContactList() {
   const [selectAll, setSelectAll] = useState(false);
@@ -18,21 +20,29 @@ function ContactList() {
   const deleteAll = () => {
     if (window.confirm("Do you want Delete all contacts?")) {
       dispatch(deleteSelectedContacts());
+      toast.error("Deleted All Contacts");
     }
   };
 
   return (
-    <div className="container list py-5">
-      <div className="heading mb-4">
-        <h3>contact list</h3>
-        {selectedContacts.length > 0 ? (
-          <button onClick={deleteAll} className="btn btn-danger">
-            delete all
-          </button>
-        ) : null}
+    <>
+      <ToastContainer />
+      <div className="container list py-5">
+        <div className="heading mb-4">
+          <h3>contact list</h3>
+          {selectedContacts.length > 0 ? (
+            <button onClick={deleteAll} className="btn btn-danger">
+              delete all
+            </button>
+          ) : null}
+        </div>
+        <ContactTable
+          selectAll={selectAll}
+          allSelect={allSelect}
+          state={state}
+        />
       </div>
-      <ContactTable selectAll={selectAll} allSelect={allSelect} state={state} />
-    </div>
+    </>
   );
 }
 

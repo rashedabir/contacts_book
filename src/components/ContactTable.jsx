@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearAllContact, selectAllContact } from "../actions/createContactAction";
+import {
+  clearAllContact,
+  selectAllContact,
+} from "../actions/createContactAction";
 import ContactList from "./ContactList";
 
 function ContactTable({ state, allSelect, selectAll }) {
@@ -10,8 +13,8 @@ function ContactTable({ state, allSelect, selectAll }) {
   useEffect(() => {
     if (selectAll) {
       dispatch(selectAllContact(contacts.map((contact) => contact.id)));
-    }else{
-      dispatch(clearAllContact())
+    } else {
+      dispatch(clearAllContact());
     }
   }, [selectAll, dispatch, contacts]);
 
@@ -34,7 +37,9 @@ function ContactTable({ state, allSelect, selectAll }) {
             <th scope="col">Name</th>
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
-            <th scope="col">Action</th>
+            <th scope="col" colSpan="2" style={{ textAlign: "center" }}>
+              Action
+            </th>
           </tr>
         </thead>
         <tbody>
