@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearAllContact, selectAllContact } from "../actions/createContactAction";
 import ContactList from "./ContactList";
 
-function ContactTable({ state }) {
+function ContactTable({ state, allSelect, selectAll }) {
+  const dispatch = useDispatch();
+  const contacts = useSelector((state) => state.contacts.list);
+
+  useEffect(() => {
+    if (selectAll) {
+      dispatch(selectAllContact(contacts.map((contact) => contact.id)));
+    }else{
+      dispatch(clearAllContact())
+    }
+  }, [selectAll, dispatch, contacts]);
+
   return (
     <div className="table-responsive">
       <table className="table shadow bg-light">
@@ -11,7 +24,10 @@ function ContactTable({ state }) {
               <input
                 className="form-check-input"
                 type="checkbox"
-                value=""
+                value={selectAll}
+                onClick={() => {
+                  allSelect();
+                }}
                 id="flexCheckDefault"
               />
             </th>
@@ -24,7 +40,9 @@ function ContactTable({ state }) {
         <tbody>
           {Object.keys(state).length === 0
             ? null
-            : state.map((contact) => <ContactList contact={contact} />)}
+            : state.map((contact) => (
+                <ContactList selectAll={selectAll} contact={contact} />
+              ))}
         </tbody>
       </table>
     </div>

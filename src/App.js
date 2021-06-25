@@ -12,6 +12,7 @@ function App() {
       <Switch>
         <Route exact="true" path="/" component={ContactList} />
         <Route exact="true" path="/create" component={CreateContact} />
+        <Route exact="true" path="/edit/:id" component={CreateContact} />
       </Switch>
       <Footer />
     </Router>

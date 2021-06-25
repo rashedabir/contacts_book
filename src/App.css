@@ -29,7 +29,7 @@ form button{
 /*------------------------------------header---------------------------------*/
 
 header{
-  background-color: #FF1493;
+  background-color: #6717f3;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -59,7 +59,7 @@ header ul li{
   min-height: 87vh;
 }
 thead{
-  background-color: #6717f3;
+  background-color: #FF1493;
   color: white;
 }
 td{
@@ -71,6 +71,10 @@ td{
 tr:hover .action{
   opacity: 1;
 }
+tr i{
+  font-size: 20px;
+  color: rgb(43, 43, 43);
+}
 i{
   cursor: pointer;
 }
@@ -80,11 +84,22 @@ i{
 .form-check-input{
   margin-top: 15px !important;
 }
+.heading{
+  display: flex;
+  justify-content: space-between;
+}
+.heading button{
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+.heading h3{
+  text-transform: capitalize;
+}
 
 /*-----------------------footer--------------------*/
 
 footer{
-  background-color: #FF1493;
+  background-color: #6717f3;
   color: white;
   text-align: center;
   margin: auto;

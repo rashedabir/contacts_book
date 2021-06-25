@@ -1,14 +1,21 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { createContactAction } from "../actions/createContactAction";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createContactAction,
+  updateContactAction,
+} from "../actions/createContactAction";
+import { useHistory, useParams } from "react-router-dom";
 
 function CreateContact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
+  const [uid, setId] = useState("");
   const dispatch = useDispatch();
   const history = useHistory();
+  const { id } = useParams();
+  const state = useSelector((state) => state.contacts.list);
+  const currentContact = state.find((contact) => contact.id === id);
 
   const saveList = (e) => {
     e.preventDefault();
@@ -17,12 +24,28 @@ function CreateContact() {
       email: email,
       number: number,
     };
-    dispatch(createContactAction(contact));
-    setName("");
-    setEmail("");
-    setNumber("");
+    if (currentContact) {
+      dispatch(updateContactAction(uid, contact));
+      setName("");
+      setEmail("");
+      setNumber("");
+    } else {
+      dispatch(createContactAction(contact));
+      setName("");
+      setEmail("");
+      setNumber("");
+    }
     history.push("/");
   };
+
+  useEffect(() => {
+    if (currentContact) {
+      setId(currentContact.id);
+      setName(currentContact.contact.name);
+      setEmail(currentContact.contact.email);
+      setNumber(currentContact.contact.number);
+    }
+  }, [currentContact]);
 
   return (
     <div className="container py-3 create_contact">
@@ -67,9 +90,15 @@ function CreateContact() {
           />
           <label for="floatingInput">Mobile Number</label>
         </div>
-        <button type="submit" className="btn btn-success mt-2">
-          <i className="fas fa-save"></i> save
-        </button>
+        {currentContact ? (
+          <button type="submit" className="btn btn-success mt-2">
+            <i className="fas fa-save"></i> update
+          </button>
+        ) : (
+          <button type="submit" className="btn btn-success mt-2">
+            <i className="fas fa-save"></i> save
+          </button>
+        )}
       </form>
     </div>
   );
